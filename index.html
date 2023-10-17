@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>OU Postcode Dirty Tool</title>
+
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+
+    <!-- font awesome style -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <!-- nice select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="css/style.css" asp-append-version="true" />
+    <!-- responsive style -->
+    <link href="css/responsive.css" rel="stylesheet" />
+	
+	<script src="jquery.csv.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+<style>
+.invalid {
+	border-color: #FF0000;
+	padding-right: calc(1.5em + .75rem);
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+	background-repeat: no-repeat;
+	background-position: right calc(.375em + .1875rem) center;
+	background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+	}
+
+.valid {
+	border-color: #008000;
+	padding-right: calc(1.5em + .75rem);
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+	background-repeat: no-repeat;
+	background-position: right calc(.375em + .1875rem) center;
+	background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+	}	
+
+</style>
+
+<body>
+    <div class="hero_area">
+        <!-- header section strats -->
+        <header class="header_section">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg custom_nav-container ">
+                    <a class="navbar-brand" href="index.html">
+                        <span>
+                            OU Postcode Dirty Tool
+                        </span>
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class=""> </span>
+                    </button>
+
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                        <ul class="navbar-nav  ml-auto">
+
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+<!-- end header section -->
+     </div>
+
+    <div class="container">
+
+        <main role="main" class="pb-3">
+            <div class="container p-3 border" style="max-width:50%;margin-bottom:50%;margin-top:10px;">
+			<div class="form">
+				<div class="form-group">
+					<div class="mb-3">
+						<div class="input-group has-validation">
+						  <span class="input-group-text" id="inputGroupPrepend">Postcode to check</span>
+						  <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+						  <div class="invalid-feedback" id="invalid-feedback">
+							Is this Postcode wrong?
+						  </div>
+						  <div class="valid-feedback" id="valid">
+							This Postcode is eligible for access and retention to funding
+						  </div>
+						  <div class="valid-feedback" id="invalid">
+							This Postcode is not eligible for access and retention to funding
+						  </div>
+						</div>
+
+
+				</div>
+				<div class="text-center">
+					<button class="btn btn-primary align-content-center" onclick="check()">Check</button>
+				</div>
+				</div>
+			</div>
+		</div>
+        </main>
+
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+        </div>
+    </footer>
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/site.js" asp-append-version="true"></script>
+</body>
+
+<script>
+	function submit()
+	{
+		var postcodes = []
+	
+		if($("#validationCustomUsername").val().trim() == "")
+		{
+			$("#invalid-feedback").show();
+			$("#valid").hide();
+			$("#validationCustomUsername").addClass("invalid");
+			$("#validationCustomUsername").removeClass("valid");
+		}
+		else
+		{
+			$("#invalid-feedback").hide();
+			$("#valid").show();
+			$("#validationCustomUsername").addClass("valid");
+			$("#validationCustomUsername").removeClass("invalid");
+		}
+		
+	  
+	}
+	
+	async function check()
+	{
+	const res = await axios.get("Low-participation-postcodes-2021_22.csv");
+	console.log(res.data)
+	}
+	
+</script>
+
+</html>
