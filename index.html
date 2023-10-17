@@ -105,7 +105,7 @@
 
 				</div>
 				<div class="text-center">
-					<button class="btn btn-primary align-content-center" onclick="check()">Check</button>
+					<button class="btn btn-primary align-content-center" onclick="submit()">Check</button>
 				</div>
 				</div>
 			</div>
@@ -127,23 +127,42 @@
 <script src="axios.min.js"></script>
 
 <script>
+	
+	
+	
+	$( document ).ready(function() {
+		console.log( "ready!" );
+		var postcodes = []
+		check();
+		console.log("Loaded");
+	});
+	
 	function submit()
 	{
-		var postcodes = []
+		
 	
 		if($("#validationCustomUsername").val().trim() == "")
 		{
 			$("#invalid-feedback").show();
 			$("#valid").hide();
+			$("#invalid").hide();
 			$("#validationCustomUsername").addClass("invalid");
 			$("#validationCustomUsername").removeClass("valid");
 		}
-		else
+		else if(postcodes.includes($("#validationCustomUsername").val()))
 		{
 			$("#invalid-feedback").hide();
 			$("#valid").show();
+			$("#invalid").hide();
 			$("#validationCustomUsername").addClass("valid");
 			$("#validationCustomUsername").removeClass("invalid");
+		}
+		else {
+			$("#invalid-feedback").hide();
+			$("#valid").hide();
+			$("#invalid").show();
+			$("#validationCustomUsername").addClass("invalid");
+			$("#validationCustomUsername").removeClass("valid");
 		}
 		
 	  
@@ -151,11 +170,11 @@
 	
 	async function check()
 	{
-		const res = await axios.get("https://raw.githubusercontent.com/Hadodn/OU-Test/main/Test-participation-postcodes-2021_22.csv");
+		const res = await axios.get("https://raw.githubusercontent.com/Hadodn/OU-Test/main/Low-participation-postcodes-2021_22formated.csv");
 		console.log(res.data)
-		var data = $.csv.toArray(res.data);
+		postcodes = $.csv.toArray(res.data);
 		
-		console.log(data)
+		console.log(postcodes)
 	}
 	
 </script>
