@@ -150,7 +150,7 @@
 			$("#validationCustomUsername").addClass("invalid");
 			$("#validationCustomUsername").removeClass("valid");
 		}
-		else if(postcodes.includes($("#validationCustomUsername").val()) || postcodes2.includes($("#validationCustomUsername").val()))
+		else if(postcodes.includes($("#validationCustomUsername").val().toLowerCase().replace(/\s/g, "")) || postcodes2.includes($("#validationCustomUsername").val().toLowerCase().replace(/\s/g, "")))
 		{
 			$("#invalid-feedback").hide();
 			$("#valid").show();
