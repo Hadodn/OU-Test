@@ -149,8 +149,8 @@
 	
 	async function check()
 	{
-		const res = await axios.get("https://hadodn.co.uk/OU-Test/Test-participation-postcodes-2021_22.csv");
-		console.log(typeof res.data)
+		const res = await axios.get("https://raw.githubusercontent.com/Hadodn/OU-Test/main/Test-participation-postcodes-2021_22.csv");
+		console.log(res.data)
 		var data = $.csv.toArray(res.data);
 		
 		console.log(data)
