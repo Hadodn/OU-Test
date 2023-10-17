@@ -132,7 +132,8 @@
 	
 	$( document ).ready(function() {
 		console.log( "ready!" );
-		var postcodes = []
+		var postcodes = [];
+		var postcodes2 = [];
 		check();
 		console.log("Loaded");
 	});
@@ -149,7 +150,7 @@
 			$("#validationCustomUsername").addClass("invalid");
 			$("#validationCustomUsername").removeClass("valid");
 		}
-		else if(postcodes.includes($("#validationCustomUsername").val()))
+		else if(postcodes.includes($("#validationCustomUsername").val()) || postcodes2.includes($("#validationCustomUsername").val()))
 		{
 			$("#invalid-feedback").hide();
 			$("#valid").show();
@@ -173,7 +174,9 @@
 		const res = await axios.get("https://raw.githubusercontent.com/Hadodn/OU-Test/main/Low-participation-postcodes-2021_22formated.csv");
 		postcodes = $.csv.toArray(res.data);
 		const res2 = await axios.get("https://raw.githubusercontent.com/Hadodn/OU-Test/main/Widening-access-postcodes-2021_22formated.csv");
-		postcodes.concat($.csv.toArray(res2.data))
+		postcodes2 = $.csv.toArray(res2.data);
+		console.log(postcodes)
+		console.log(postcodes2)
 	}
 	
 </script>
