@@ -149,8 +149,9 @@
 	
 	async function check()
 	{
-	const res = await axios.get("Low-participation-postcodes-2021_22.csv");
-	console.log(res.data)
+		const res = await axios.get("Low-participation-postcodes-2021_22.csv");
+		data = $.csv.toArray(res.data);
+		console.log(data)
 	}
 	
 </script>
